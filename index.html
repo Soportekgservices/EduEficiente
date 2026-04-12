@@ -3,118 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHASIDE Neo-Horizon | Vocacional</title>
+    <title>CHASIDE Neo-Horizon | Reingeniería</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --primary: #2D3250; --accent: #F6B17A; --secondary: #7077A1; --bg: #F4F7FB; --white: #ffffff; --success: #46B4A8; --shadow: 0 10px 40px rgba(0,0,0,0.06); }
+        :root { --p: #2D3250; --a: #F6B17A; --s: #7077A1; --bg: #F8FAFC; --w: #ffffff; --sh: 0 10px 30px rgba(0,0,0,0.05); }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: #1A1C2C; overflow-x: hidden; }
-        .view-section { display: none; min-height: 100vh; }
-        .view-section.active { display: flex; }
-        .login-screen { align-items: center; justify-content: center; background: radial-gradient(circle at top right, #f6b17a15, transparent), var(--bg); }
-        .login-card { background: var(--white); padding: 50px; border-radius: 35px; box-shadow: var(--shadow); width: 100%; max-width: 450px; text-align: center; }
-        .login-card h1 { font-weight: 800; font-size: 2.5rem; margin-bottom: 30px; color: var(--primary); letter-spacing: -1.5px; }
-        .input-box { text-align: left; margin-bottom: 20px; }
-        .input-box label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; color: var(--secondary); }
-        .input-box select, .input-box input { width: 100%; padding: 15px; border-radius: 15px; border: 1.5px solid #E2E8F0; background: #F8FAFC; font-family: inherit; }
-        .btn-main { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .btn-main:hover { background: var(--accent); transform: translateY(-3px); }
-        .app-container { display: none; width: 100%; }
-        .sidebar { width: 260px; background: var(--primary); min-height: 100vh; padding: 40px 20px; position: fixed; color: white; }
-        .sidebar h2 { color: var(--accent); margin-bottom: 40px; text-align: center; }
-        .nav-item { padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; color: #ADB3D2; margin-bottom: 5px; }
-        .nav-item.active { background: rgba(255,255,255,0.1); color: white; }
-        .main-content { margin-left: 260px; flex: 1; padding: 40px; }
-        .bento-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
-        .card { background: var(--white); border-radius: 25px; padding: 25px; box-shadow: var(--shadow); }
-        .span-2 { grid-column: span 2; } .span-3 { grid-column: span 3; } .span-6 { grid-column: span 6; }
-        .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--primary); display: block; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .data-table th { text-align: left; padding: 12px; color: var(--secondary); font-size: 0.7rem; border-bottom: 1px solid #eee; }
-        .data-table td { padding: 15px 12px; border-bottom: 1px solid #f9f9f9; font-size: 0.9rem; }
-        .toggle-btn { width: 40px; height: 20px; background: #ddd; border-radius: 20px; position: relative; cursor: pointer; }
-        .toggle-btn.active { background: var(--success); }
-        .toggle-btn::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
-        .toggle-btn.active::after { left: 22px; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--p); }
+        .view { display: none; min-height: 100vh; width: 100%; } .view.active { display: flex; }
+        .login { align-items: center; justify-content: center; background: radial-gradient(circle at top right, #f6b17a15, transparent), var(--bg); }
+        .l-card { background: var(--w); padding: 50px; border-radius: 35px; box-shadow: var(--sh); width: 100%; max-width: 420px; text-align: center; }
+        .input-g { text-align: left; margin-bottom: 20px; }
+        .input-g label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--s); margin-bottom: 8px; display: block; }
+        .input-g input, .input-g select { width: 100%; padding: 15px; border-radius: 15px; border: 1.5px solid #E2E8F0; background: #F8FAFC; font-family: inherit; }
+        .btn { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: var(--a); transform: translateY(-2px); }
+        .sidebar { width: 260px; background: var(--p); padding: 40px 20px; color: white; position: fixed; height: 100vh; }
+        .nav-i { padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; color: #ADB3D2; cursor: pointer; margin-bottom: 5px; }
+        .nav-i.active { background: rgba(255,255,255,0.1); color: white; }
+        .main { margin-left: 260px; flex: 1; padding: 40px; }
+        .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+        .card { background: var(--w); border-radius: 25px; padding: 25px; box-shadow: var(--sh); }
+        .s-6 { grid-column: span 6; } .s-3 { grid-column: span 3; } .s-2 { grid-column: span 2; }
+        .l-opt { padding: 10px 15px; background: #f1f5f9; border-radius: 10px; cursor: pointer; font-weight: 700; text-align: center; flex: 1; margin: 0 5px; }
+        .l-opt.sel { background: var(--p); color: white; }
     </style>
 </head>
 <body>
 
-    <section id="loginView" class="view-section active login-screen">
-        <div class="login-card">
-            <h1>CHASIDE</h1>
-            <div class="input-box">
-                <label>Documento</label>
-                <select><option>Cédula de Ciudadanía</option><option>Tarjeta de Identidad</option></select>
+    <section id="lV" class="view active login">
+        <div class="l-card">
+            <h1 style="font-weight:800; font-size:2.5rem; margin-bottom:30px;">CHASIDE</h1>
+            <div class="input-g">
+                <label>Tipo de Documento</label>
+                <select id="lType">
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                </select>
             </div>
-            <div class="input-box">
-                <label>Número</label>
-                <input type="text" id="loginId" placeholder="Ingresa tu ID">
+            <div class="input-g">
+                <label>Número de Identificación</label>
+                <input type="text" id="lId" placeholder="Ej: 111">
             </div>
-            <button class="btn-main" onclick="authGate()">Ingresar al Sistema</button>
+            <button class="btn" onclick="auth()">Entrar al Sistema</button>
         </div>
     </section>
 
-    <div id="appContainer" class="app-container">
-        <aside class="sidebar">
-            <h2 id="roleBrand">NEO.CHASIDE</h2>
-            <nav id="roleMenu"></nav>
-        </aside>
-        <main class="main-content">
-            <h1 id="pageTitle" style="font-weight: 800; margin-bottom: 10px;">Dashboard</h1>
-            <p id="pageDesc" style="color: var(--secondary); margin-bottom: 30px;"></p>
-            <div id="dynamicBoard" class="bento-grid"></div>
+    <div id="aC" class="view">
+        <aside class="sidebar"><h2 style="color:var(--a); margin-bottom:40px; text-align:center;">NEO.CH</h2><div id="menu"></div></aside>
+        <main class="main">
+            <h1 id="pT" style="margin-bottom:10px; font-weight:800;">Dashboard</h1>
+            <p id="pD" style="color:var(--s); margin-bottom:30px;"></p>
+            <div id="board" class="bento"></div>
         </main>
     </div>
 
     <script>
         const { createClient } = supabase;
-        const _supabase = createClient('https://lllrnkzhwudnfbrxciqb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsbHJua3pod3VkbmZicnhjaXFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMTEwMzQsImV4cCI6MjA5MTU4NzAzNH0.MwuXJnxwJJtPejJmxQljwvEmmcOw9FzYa_5w7cKYSM0');
+        // URL Corregida: lllrnkzhwudnfbrxciqb
+        const _s = createClient('https://lllrnkzhwudnfbrxciqb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsbHJua3pod3VkbmFicnhjaXFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMTEwMzQsImV4cCI6MjA5MTU4NzAzNH0.MwuXJnxwJJtPejJmxQljwvEmmcOw9FzYa_5w7cKYSM0');
+        
+        const banco = ["Me interesa saber cómo funcionan las máquinas y los motores", "Disfruto resolviendo problemas matemáticos complejos", "Me gusta realizar experimentos científicos", "Me atrae la idea de trabajar en laboratorios", "Me interesa la programación y el desarrollo de software", "Disfruto analizando datos y estadísticas", "Me fascina la química y sus aplicaciones", "Me gustaría investigar sobre nuevas tecnologías", "Me interesa entender cómo funciona el universo", "Disfruto trabajando con fórmulas y ecuaciones", "Me gusta leer sobre historia y culturas diferentes", "Disfruto debatiendo sobre temas políticos y sociales", "Me interesa comprender el comportamiento humano", "Me atrae la idea de ser abogado o juez", "Disfruto escribiendo ensayos y textos reflexivos", "Me gustaría trabajar en defensa de los derechos humanos", "Me interesa estudiar filosofía y ética", "Disfruto investigando sobre problemas sociales", "Me atrae la antropología y el estudio de las sociedades", "Me gusta analizar documentos históricos", "Disfruto dibujando y pintando", "Me gusta diseñar y crear cosas visualmente atractivas", "Me interesa la fotografía y el diseño gráfico", "Disfruto actuando o participando en obras de teatro", "Me atrae la música y tocar instrumentos", "Me gusta crear contenido audiovisual", "Disfruto la danza y la expresión corporal", "Me interesa la arquitectura y el diseño de espacios", "Me gusta escribir historias y poesía", "Disfruto visitando museos y galerías de arte", "Me gusta enseñar y explicar cosas a otras personas", "Disfruto trabajando con niños y adolescentes", "Me interesa la pedagogía y los métodos de enseñanza", "Me atrae la idea de ser profesor o maestro", "Disfruto organizando actividades educativas", "Me gusta ayudar a otros a desarrollar sus habilidades", "Me interesa la psicología educativa", "Disfruto planificando programas de formación", "Me atrae trabajar en instituciones educativas", "Me gusta fomentar el desarrollo de las comunidades", "Me gusta diseñar y construir estructuras", "Disfruto resolviendo problemas técnicos", "Me interesa la robótica y la automatización", "Me atrae el diseño de sistemas informáticos", "Disfruto trabajando con tecnologías emergentes", "Me gusta crear aplicaciones y páginas web", "Me interesa la inteligencia artificial", "Disfruto optimizando procesos industriales", "Me atrae la ingeniería biomédica", "Me gusta trabajar en proyectos de infraestructura", "Me gusta organizar y planificar proyectos", "Disfruto negociando y cerrando acuerdos", "Me interesa el mundo de los negocios y las finanzas", "Me atrae la idea de dirigir una empresa", "Disfruto analizando mercados y tendencias económicas", "Me gusta el marketing y la publicidad", "Me interesa la contabilidad y las finanzas", "Disfruto liderando equipos de trabajo", "Me atrae el emprendimiento", "Me gusta gestionar recursos y presupuestos"];
+        
+        let res = new Array(60).fill(0), step = 0, sess = null;
 
-        async function authGate() {
-            const id = document.getElementById('loginId').value;
-            const { data, error } = await _supabase.from('profiles').select('*').eq('identificacion', id).single();
-            if (error || !data) return alert("Usuario no encontrado");
-            document.getElementById('loginView').classList.remove('active');
-            document.getElementById('appContainer').style.display = 'flex';
-            renderDashboard(data.rol, data.identificacion);
+        async function auth() {
+            const id = document.getElementById('lId').value;
+            const { data, error } = await _s.from('profiles').select('*').eq('identificacion', id).single();
+            if (error || !data) return alert("Usuario no encontrado en la base de datos.");
+            sess = data;
+            document.getElementById('lV').classList.remove('active');
+            document.getElementById('aC').classList.add('active');
+            render(data.rol, data.identificacion);
         }
 
-        const views = {
-            admin: {
-                title: "Maestro Global", desc: "Aprobación de distribuidores.",
-                menu: [{l: 'Dashboard', i: 'fa-chart-pie'}, {l: 'Distribuidores', i: 'fa-user-tie'}],
-                content: '<div class="card span-2"><span class="stat-num">24</span><span class="stat-desc">Distribuidores</span></div><div class="card span-2"><span class="stat-num">12</span><span class="stat-desc">Pendientes</span></div>'
-            },
-            distribuidor: {
-                title: "Panel Comercial", desc: "Gestión de colegios y cupos.",
-                menu: [{l: 'Dashboard', i: 'fa-house'}, {l: 'Mis Colegios', i: 'fa-school'}],
-                content: '<div class="card span-3"><span class="stat-num">08</span><span class="stat-desc">Colegios</span></div><div class="card span-3"><span class="stat-num">450</span><span class="stat-desc">Cupos</span></div>'
-            },
-            rector: {
-                title: "Análisis Rectoría", desc: "Estadísticas del plantel.",
-                menu: [{l: 'Resultados', i: 'fa-users'}, {l: 'Informes', i: 'fa-file-pdf'}],
-                content: '<div class="card span-6"><h3>Tendencia del Colegio</h3><div style="height:15px; background:var(--accent); width:80%; margin-top:20px; border-radius:10px;"></div></div>'
-            },
-            estudiante: {
-                title: "Test Vocacional", desc: "Pregunta 1 de 60.",
-                menu: [{l: 'Mi Test', i: 'fa-clipboard-check'}],
-                content: '<div class="card span-6"><h2>¿Te interesa la robótica?</h2><div style="display:flex; gap:10px; margin-top:20px;"><button class="btn-main">Sí</button><button class="btn-main" style="background:#eee; color:#333;">No</button></div></div>'
-            }
-        };
+        function render(role, id) {
+            if(role === 'estudiante') return showTest();
+            const config = { admin: {t:"Admin Global", c:"s-2", v:"24 Distribuidores"}, distribuidor: {t:"Panel Comercial", c:"s-3", v:"8 Colegios Activos"}, rector: {t:"Rectoría", c:"s-6", v:"Reporte General del Plantel"} };
+            const d = config[role];
+            document.getElementById('pT').innerText = d.t;
+            document.getElementById('pD').innerText = "Bienvenido, " + role.toUpperCase();
+            document.getElementById('board').innerHTML = `<div class="card ${d.c}"><span style="font-size:2rem; font-weight:800;">${d.v}</span></div>`;
+            document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-th-large"></i> Dashboard</div><div class="nav-i"><i class="fas fa-file-pdf"></i> Reportes</div>`;
+        }
 
-        function renderDashboard(role, id) {
-            const d = views[role];
-            document.getElementById('pageTitle').innerText = d.title;
-            document.getElementById('pageDesc').innerText = d.desc;
-            document.getElementById('dynamicBoard').innerHTML = d.content;
-            const menu = document.getElementById('roleMenu');
-            menu.innerHTML = "";
-            d.menu.forEach(m => {
-                menu.innerHTML += `<div class="nav-item"><i class="fa-solid ${m.i}"></i> ${m.l}</div>`;
-            });
+        function showTest() {
+            const start = step * 10, end = start + 10;
+            let html = `<div class="s-6"><p style="font-weight:600; color:var(--s)">Bloque ${step+1} de 6</p></div>`;
+            for (let i = start; i < end; i++) {
+                html += `<div class="card s-6"><strong>${i+1}. ${banco[i]}</strong><div style="display:flex; margin-top:15px;">${[1,2,3,4,5].map(v => `<div class="l-opt ${res[i]==v?'sel':''}" onclick="setR(${i},${v})">${v}</div>`).join('')}</div></div>`;
+            }
+            html += `<div class="s-6" style="text-align:right; margin-top:20px;">${step > 0 ? `<button class="btn" style="width:120px; background:var(--s); margin-right:10px;" onclick="mS(-1)">Anterior</button>` : ''} ${step < 5 ? `<button class="btn" style="width:120px;" onclick="mS(1)">Siguiente</button>` : `<button class="btn" style="width:120px; background:var(--a);" onclick="finish()">Enviar Test</button>`}</div>`;
+            document.getElementById('board').innerHTML = html;
+            document.getElementById('pT').innerText = "Prueba Vocacional";
+            document.getElementById('pD').innerText = "Responde del 1 al 5 según tu interés.";
+            document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-edit"></i> Mi Prueba</div>`;
+        }
+
+        function setR(i, v) { res[i] = v; showTest(); }
+        function mS(d) { step += d; window.scrollTo(0,0); showTest(); }
+
+        async function finish() {
+            if(res.includes(0)) return alert("Por favor responde todas las preguntas del bloque.");
+            const s = {C:0,H:0,A:0,S:0,I:0,D:0};
+            res.forEach((v,i) => { if(i<10) s.C+=v; else if(i<20) s.H+=v; else if(i<30) s.A+=v; else if(i<40) s.S+=v; else if(i<50) s.I+=v; else s.D+=v; });
+            const dom = Object.keys(s).reduce((a, b) => s[a] > s[b] ? a : b);
+            const { error } = await _s.from('resultados').insert([{ identificacion: sess.identificacion, puntajes: s, area_dominante: dom }]);
+            if(error) alert("Error de guardado. Verifica la tabla resultados."); else { alert("Test completado. Área sugerida: " + dom); location.reload(); }
         }
     </script>
 </body>
