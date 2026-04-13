@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHASIDE Neo-Horizon | Reingeniería</title>
+    <title>CHASIDE Neo-Horizon | Reingeniería Modular</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -19,15 +19,29 @@
         .input-g input, .input-g select { width: 100%; padding: 15px; border-radius: 15px; border: 1.5px solid #E2E8F0; background: #F8FAFC; font-family: inherit; }
         .btn { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; }
         .btn:hover { background: var(--a); transform: translateY(-2px); }
-        .sidebar { width: 260px; background: var(--p); padding: 40px 20px; color: white; position: fixed; height: 100vh; }
+        
+        /* Layout */
+        .sidebar { width: 260px; background: var(--p); padding: 40px 20px; color: white; position: fixed; height: 100vh; z-index: 10; }
         .nav-i { padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; color: #ADB3D2; cursor: pointer; margin-bottom: 5px; }
         .nav-i.active { background: rgba(255,255,255,0.1); color: white; }
         .main { margin-left: 260px; flex: 1; padding: 40px; }
         .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
         .card { background: var(--w); border-radius: 25px; padding: 25px; box-shadow: var(--sh); }
         .s-6 { grid-column: span 6; } .s-3 { grid-column: span 3; } .s-2 { grid-column: span 2; }
-        .l-opt { padding: 10px 15px; background: #f1f5f9; border-radius: 10px; cursor: pointer; font-weight: 700; text-align: center; flex: 1; margin: 0 5px; }
-        .l-opt.sel { background: var(--p); color: white; }
+
+        /* Reingeniería Test Estudiante */
+        .progress-container { width: 100%; background: #e2e8f0; border-radius: 10px; height: 12px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--a); transition: 0.4s ease; width: 0%; }
+        .likert-vertical { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
+        .l-btn { padding: 18px; background: #f1f5f9; border: 2px solid transparent; border-radius: 15px; cursor: pointer; font-weight: 700; text-align: center; font-size: 1.1rem; transition: 0.2s; }
+        .l-btn.sel { background: var(--p); color: white; border-color: var(--p); }
+        .l-btn:hover:not(.sel) { background: #e2e8f0; }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 20px; }
+            .l-card { padding: 30px; }
+        }
     </style>
 </head>
 <body>
@@ -61,7 +75,6 @@
 
     <script>
         const { createClient } = supabase;
-        // URL Corregida: lllrnkzhwudnfbrxciqb
         const _s = createClient('https://lllrnkzhwudnfbrxciqb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsbHJua3pod3VkbmZicnhjaXFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMTEwMzQsImV4cCI6MjA5MTU4NzAzNH0.MwuXJnxwJJtPejJmxQljwvEmmcOw9FzYa_5w7cKYSM0');
         
         const banco = ["Me interesa saber cómo funcionan las máquinas y los motores", "Disfruto resolviendo problemas matemáticos complejos", "Me gusta realizar experimentos científicos", "Me atrae la idea de trabajar en laboratorios", "Me interesa la programación y el desarrollo de software", "Disfruto analizando datos y estadísticas", "Me fascina la química y sus aplicaciones", "Me gustaría investigar sobre nuevas tecnologías", "Me interesa entender cómo funciona el universo", "Disfruto trabajando con fórmulas y ecuaciones", "Me gusta leer sobre historia y culturas diferentes", "Disfruto debatiendo sobre temas políticos y sociales", "Me interesa comprender el comportamiento humano", "Me atrae la idea de ser abogado o juez", "Disfruto escribiendo ensayos y textos reflexivos", "Me gustaría trabajar en defensa de los derechos humanos", "Me interesa estudiar filosofía y ética", "Disfruto investigando sobre problemas sociales", "Me atrae la antropología y el estudio de las sociedades", "Me gusta analizar documentos históricos", "Disfruto dibujando y pintando", "Me gusta diseñar y crear cosas visualmente atractivas", "Me interesa la fotografía y el diseño gráfico", "Disfruto actuando o participando en obras de teatro", "Me atrae la música y tocar instrumentos", "Me gusta crear contenido audiovisual", "Disfruto la danza y la expresión corporal", "Me interesa la arquitectura y el diseño de espacios", "Me gusta escribir historias y poesía", "Disfruto visitando museos y galerías de arte", "Me gusta enseñar y explicar cosas a otras personas", "Disfruto trabajando con niños y adolescentes", "Me interesa la pedagogía y los métodos de enseñanza", "Me atrae la idea de ser profesor o maestro", "Disfruto organizando actividades educativas", "Me gusta ayudar a otros a desarrollar sus habilidades", "Me interesa la psicología educativa", "Disfruto planificando programas de formación", "Me atrae trabajar en instituciones educativas", "Me gusta fomentar el desarrollo de las comunidades", "Me gusta diseñar y construir estructuras", "Disfruto resolviendo problemas técnicos", "Me interesa la robótica y la automatización", "Me atrae el diseño de sistemas informáticos", "Disfruto trabajando con tecnologías emergentes", "Me gusta crear aplicaciones y páginas web", "Me interesa la inteligencia artificial", "Disfruto optimizando procesos industriales", "Me atrae la ingeniería biomédica", "Me gusta trabajar en proyectos de infraestructura", "Me gusta organizar y planificar proyectos", "Disfruto negociando y cerrando acuerdos", "Me interesa el mundo de los negocios y las finanzas", "Me atrae la idea de dirigir una empresa", "Disfruto analizando mercados y tendencias económicas", "Me gusta el marketing y la publicidad", "Me interesa la contabilidad y las finanzas", "Disfruto liderando equipos de trabajo", "Me atrae el emprendimiento", "Me gusta gestionar recursos y presupuestos"];
@@ -71,46 +84,103 @@
         async function auth() {
             const id = document.getElementById('lId').value;
             const { data, error } = await _s.from('profiles').select('*').eq('identificacion', id).single();
-            if (error || !data) return alert("Usuario no encontrado en la base de datos.");
+            if (error || !data) return alert("Usuario no encontrado.");
             sess = data;
             document.getElementById('lV').classList.remove('active');
             document.getElementById('aC').classList.add('active');
-            render(data.rol, data.identificacion);
+            
+            // Arquitectura Modular de Vistas
+            if(data.rol === 'admin') viewAdmin();
+            else if(data.rol === 'distribuidor') viewDist();
+            else if(data.rol === 'rector') viewRector();
+            else if(data.rol === 'estudiante') viewStudent();
         }
 
-        function render(role, id) {
-            if(role === 'estudiante') return showTest();
-            const config = { admin: {t:"Admin Global", c:"s-2", v:"24 Distribuidores"}, distribuidor: {t:"Panel Comercial", c:"s-3", v:"8 Colegios Activos"}, rector: {t:"Rectoría", c:"s-6", v:"Reporte General del Plantel"} };
-            const d = config[role];
-            document.getElementById('pT').innerText = d.t;
-            document.getElementById('pD').innerText = "Bienvenido, " + role.toUpperCase();
-            document.getElementById('board').innerHTML = `<div class="card ${d.c}"><span style="font-size:2rem; font-weight:800;">${d.v}</span></div>`;
-            document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-th-large"></i> Dashboard</div><div class="nav-i"><i class="fas fa-file-pdf"></i> Reportes</div>`;
+        // --- FUNCIONES DE VISTA MODULARES ---
+
+        function viewAdmin() {
+            document.getElementById('pT').innerText = "Admin Global";
+            document.getElementById('pD').innerText = "Control de distribuidores y sistema.";
+            document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-chart-pie"></i> Dashboard</div>`;
+            document.getElementById('board').innerHTML = `<div class="card s-2"><span style="font-size:2rem; font-weight:800;">24</span> Distribuidores</div>`;
         }
 
-        function showTest() {
-            const start = step * 10, end = start + 10;
-            let html = `<div class="s-6"><p style="font-weight:600; color:var(--s)">Bloque ${step+1} de 6</p></div>`;
-            for (let i = start; i < end; i++) {
-                html += `<div class="card s-6"><strong>${i+1}. ${banco[i]}</strong><div style="display:flex; margin-top:15px;">${[1,2,3,4,5].map(v => `<div class="l-opt ${res[i]==v?'sel':''}" onclick="setR(${i},${v})">${v}</div>`).join('')}</div></div>`;
-            }
-            html += `<div class="s-6" style="text-align:right; margin-top:20px;">${step > 0 ? `<button class="btn" style="width:120px; background:var(--s); margin-right:10px;" onclick="mS(-1)">Anterior</button>` : ''} ${step < 5 ? `<button class="btn" style="width:120px;" onclick="mS(1)">Siguiente</button>` : `<button class="btn" style="width:120px; background:var(--a);" onclick="finish()">Enviar Test</button>`}</div>`;
-            document.getElementById('board').innerHTML = html;
+        function viewDist() {
+            document.getElementById('pT').innerText = "Panel Comercial";
+            document.getElementById('pD').innerText = "Gestión de colegios y ventas.";
+            document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-th-large"></i> Dashboard</div>`;
+            document.getElementById('board').innerHTML = `<div class="card s-3"><span style="font-size:2rem; font-weight:800;">8</span> Colegios Activos</div>`;
+        }
+
+        function viewRector() {
+            document.getElementById('pT').innerText = "Rectoría";
+            document.getElementById('pD').innerText = "Resultados de su institución.";
+            document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-school"></i> Mi Colegio</div>`;
+            document.getElementById('board').innerHTML = `<div class="card s-6">Reporte General del Plantel</div>`;
+        }
+
+        function viewStudent() {
             document.getElementById('pT').innerText = "Prueba Vocacional";
-            document.getElementById('pD').innerText = "Responde del 1 al 5 según tu interés.";
+            document.getElementById('pD').innerText = "Responde honestamente cada pregunta.";
             document.getElementById('menu').innerHTML = `<div class="nav-i active"><i class="fas fa-edit"></i> Mi Prueba</div>`;
+            renderStudentTest();
         }
 
-        function setR(i, v) { res[i] = v; showTest(); }
-        function mS(d) { step += d; window.scrollTo(0,0); showTest(); }
+        // --- REINGENIERÍA DEL TEST (1 A LA VEZ) ---
+
+        function renderStudentTest() {
+            const progress = Math.round((step / 60) * 100);
+            let html = `
+                <div class="s-6">
+                    <div class="progress-container"><div class="progress-bar" style="width: ${progress}%"></div></div>
+                    <p style="font-weight:600; color:var(--s)">Pregunta ${step + 1} de 60 (${progress}%)</p>
+                </div>
+                <div class="card s-6" style="max-width: 700px; margin: 0 auto;">
+                    <h2 style="margin-bottom:10px; font-weight:800; font-size:1.6rem;">${banco[step]}</h2>
+                    <p style="color:var(--s); font-size:0.9rem; margin-bottom:20px;">Selecciona tu nivel de interés del 1 al 5:</p>
+                    <div class="likert-vertical">
+                        ${[1,2,3,4,5].map(v => `
+                            <div class="l-btn ${res[step] == v ? 'sel' : ''}" onclick="setR(${step},${v})">
+                                ${v} ${v==1 ? '(Nada)' : v==5 ? '(Mucho)' : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="s-6" style="display:flex; justify-content:space-between; margin-top:30px; max-width: 700px; margin-left:auto; margin-right:auto;">
+                    <button class="btn" style="width:140px; background:var(--s);" onclick="nav(-1)" ${step === 0 ? 'style="opacity:0.5; cursor:default;" disabled' : ''}>Anterior</button>
+                    ${step < 59 ? 
+                        `<button class="btn" style="width:140px;" onclick="nav(1)">Siguiente</button>` : 
+                        `<button class="btn" style="width:140px; background:var(--a);" onclick="finish()">Finalizar</button>`
+                    }
+                </div>
+            `;
+            document.getElementById('board').innerHTML = html;
+        }
+
+        function setR(i, v) { 
+            res[i] = v; 
+            renderStudentTest(); 
+            // Pequeño retardo para pasar automáticamente a la siguiente pregunta tras seleccionar
+            setTimeout(() => { if(step < 59) nav(1); }, 300);
+        }
+
+        function nav(d) { 
+            if(d > 0 && res[step] === 0) {
+                alert("Por favor selecciona una respuesta antes de continuar.");
+                return;
+            }
+            step += d; 
+            window.scrollTo(0,0); 
+            renderStudentTest(); 
+        }
 
         async function finish() {
-            if(res.includes(0)) return alert("Por favor responde todas las preguntas del bloque.");
+            if(res.includes(0)) return alert("Por favor responde todas las preguntas.");
             const s = {C:0,H:0,A:0,S:0,I:0,D:0};
             res.forEach((v,i) => { if(i<10) s.C+=v; else if(i<20) s.H+=v; else if(i<30) s.A+=v; else if(i<40) s.S+=v; else if(i<50) s.I+=v; else s.D+=v; });
             const dom = Object.keys(s).reduce((a, b) => s[a] > s[b] ? a : b);
             const { error } = await _s.from('resultados').insert([{ identificacion: sess.identificacion, puntajes: s, area_dominante: dom }]);
-            if(error) alert("Error de guardado. Verifica la tabla resultados."); else { alert("Test completado. Área sugerida: " + dom); location.reload(); }
+            if(error) alert("Error de guardado."); else { alert("Test completado. Área: " + dom); location.reload(); }
         }
     </script>
 </body>
