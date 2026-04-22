@@ -30,27 +30,109 @@
         .view-section { display: none; min-height: 100vh; }
         .view-section.active { display: flex; }
 
-        .login-screen { align-items: center; justify-content: center; background: radial-gradient(circle at top right, #f6b17a15, transparent), var(--bg); }
-        .login-card { background: var(--white); padding: 50px; border-radius: 35px; box-shadow: var(--shadow); width: 100%; max-width: 480px; text-align: center; border: 1px solid #fff; }
-        .login-card h1 { font-weight: 800; font-size: 2.8rem; margin-bottom: 10px; color: var(--primary); letter-spacing: -1.5px; }
-        .login-card p { color: var(--secondary); margin-bottom: 40px; }
-        .input-box { text-align: left; margin-bottom: 25px; }
-        .input-box label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; color: var(--secondary); padding-left: 5px; }
-        .input-box select, .input-box input { width: 100%; padding: 16px 20px; border-radius: 18px; border: 1.5px solid #E2E8F0; font-family: inherit; font-size: 1rem; transition: 0.3s; background: #F8FAFC; }
-        .input-box input:focus, .input-box select:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px rgba(246, 177, 122, 0.15); }
-        .btn-main { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 18px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.4s; }
-        .btn-main:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(246, 177, 122, 0.3); }
+        /* --- ESTILOS LOGIN (BASADOS EN EJEMPLO) --- */
+        .login-screen { background: #eef1f7; }
+        .login-screen.active { flex-direction: column; display: flex; }
 
+        .navbar-login {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            width: 100%;
+        }
+
+        .logo-login { font-weight: 800; font-size: 1.5rem; color: var(--primary); }
+
+        .menu-login { display: flex; align-items: center; }
+        .menu-login a { margin: 0 12px; text-decoration: none; color: #444; font-weight: 500; font-size: 0.9rem; }
+
+        .ingresa-btn {
+            padding: 8px 20px;
+            border-radius: 10px;
+            color: white !important;
+            font-weight: 600;
+            background: linear-gradient(90deg, #4f46e5, #9333ea);
+            background-size: 200%;
+            transition: background-position 0.5s;
+        }
+        .ingresa-btn:hover { background-position: right; }
+
+        .wrapper-login {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-login {
+            width: 1000px;
+            height: 520px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .left-login { width: 55%; display: flex; justify-content: center; align-items: center; }
+        .image-placeholder-login { width: 100%; height: 100%; max-height: 400px; border-radius: 20px; overflow: hidden; background: #f7f8fc; display: flex; justify-content: center; align-items: center; }
+        .image-placeholder-login img { width: 100%; height: 100%; object-fit: contain; }
+
+        .right-login { width: 45%; display: flex; justify-content: center; align-items: center; }
+        .login-box-container { width: 320px; text-align: left; }
+        .login-box-container h2 { margin-bottom: 5px; font-weight: 800; color: var(--primary); font-size: 1.8rem; }
+        .login-box-container p { margin-bottom: 25px; color: #666; font-size: 0.9rem; }
+
+        .input-group-login { margin-bottom: 15px; }
+        .input-group-login input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #ccc; outline: none; font-family: inherit; transition: 0.3s; }
+        .input-group-login input:focus { border-color: #6d28d9; box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1); }
+
+        .options-login { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 20px; color: #666; }
+        .options-login input { margin-right: 5px; }
+        .options-login a { text-decoration: none; color: #4f46e5; font-weight: 600; }
+
+        .btn-login-action {
+            width: 100%; padding: 14px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer;
+            background: linear-gradient(90deg, #4f46e5, #9333ea, #4f46e5);
+            background-size: 200%; transition: background-position 0.5s, transform 0.2s;
+        }
+        .btn-login-action:hover { background-position: right; transform: translateY(-2px); }
+
+        /* --- RESTO DE LA APP --- */
         .app-container { display: none; width: 100%; }
-        .sidebar { width: 280px; background: var(--primary); min-height: 100vh; padding: 40px 25px; position: fixed; color: white; z-index: 100; transition: 0.3s; }
-        .sidebar h2 { font-weight: 800; font-size: 1.4rem; margin-bottom: 50px; color: var(--accent); text-align: center; }
+        .btn-main { 
+            width: 100%; padding: 16px; 
+            background: linear-gradient(90deg, #4f46e5, #9333ea, #4f46e5);
+            background-size: 200%;
+            color: white; border: none; border-radius: 15px; 
+            font-weight: 700; font-size: 1rem; cursor: pointer; 
+            transition: 0.5s; 
+        }
+        .btn-main:hover { background-position: right; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2); }
+        
+        .sidebar { width: 280px; background: #2D3250; min-height: 100vh; padding: 40px 25px; position: fixed; color: white; z-index: 100; transition: 0.3s; }
+        .sidebar h2 { font-weight: 800; font-size: 1.4rem; margin-bottom: 50px; color: #fff; text-align: center; letter-spacing: 2px; }
         .nav-menu { list-style: none; }
-        .nav-item { position: relative; padding: 14px 18px; border-radius: 15px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 15px; transition: 0.3s; color: #ADB3D2; font-weight: 500; }
-        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.08); color: white; }
+        .nav-item { 
+            position: relative; padding: 14px 18px; border-radius: 12px; margin-bottom: 8px; 
+            cursor: pointer; display: flex; align-items: center; gap: 15px; 
+            transition: 0.4s all; color: #ADB3D2; font-weight: 500;
+            background: linear-gradient(90deg, transparent 50%, #4f46e5 50%, #9333ea);
+            background-size: 200% 100%;
+        }
+        .nav-item:hover, .nav-item.active { background-position: right bottom; color: white; transform: translateX(5px); }
         .nav-item i { font-size: 1.2rem; }
 
+        /* Ajuste específico para el botón de salida */
+        .nav-item.logout-item { color: var(--danger); opacity: 0.8; }
+        .nav-item.logout-item:hover { color: white; opacity: 1; }
+
         .main-content { margin-left: 280px; flex: 1; padding: 40px 60px; background: var(--bg); min-height: 100vh; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .user-profile { display: flex; align-items: center; gap: 15px; background: var(--white); padding: 10px 20px; border-radius: 20px; box-shadow: var(--shadow); }
         .user-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem; }
 
@@ -64,6 +146,21 @@
         .stat-num { font-size: 2.8rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 5px; }
         .stat-desc { color: var(--secondary); font-size: 0.9rem; font-weight: 500; }
 
+        /* --- ESTILOS DE FORMULARIOS CORREGIDOS --- */
+        .input-box { text-align: left; margin-bottom: 20px; }
+        .input-box label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); padding-left: 5px; }
+        .input-box select, .input-box input, .input-box textarea { 
+            width: 100%; padding: 14px 18px; border-radius: 12px; 
+            border: 1.5px solid #E2E8F0; font-family: inherit; font-size: 0.95rem; 
+            transition: 0.3s; background: #F8FAFC; color: var(--text-main);
+        }
+        .input-box input:focus, .input-box select:focus, .input-box textarea:focus { 
+            border-color: #4f46e5; background: #fff; 
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); 
+            outline: none;
+        }
+
+        /* --- TABLAS --- */
         .data-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 15px; }
         .data-table th { text-align: left; padding: 15px; color: var(--secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
         .data-table td { padding: 18px 15px; background: #F8FAFC; vertical-align: middle; }
@@ -461,23 +558,56 @@
 <body>
 
     <section id="loginView" class="view-section active login-screen">
-        <div class="login-card">
-            <h1>Bienvenido</h1>
-            <p>Portal Único de Acceso Vocacional</p>
-            <div class="input-box">
-                <label>Número de Identificación</label>
-                <input type="text" id="lId" placeholder="Ej: 111">
+        <!-- NAVBAR -->
+        <div class="navbar-login">
+            <div class="logo-login">EDUEFICIENTE</div>
+            <div class="menu-login">
+                <a href="#">Inicio</a>
+                <a href="#">Nosotros</a>
+                <a href="#">Servicios</a>
+                <a href="#" class="ingresa-btn">Ingresa</a>
             </div>
-            <button class="btn-main" onclick="auth()">Iniciar Sesión</button>
+        </div>
+
+        <!-- CONTENIDO CENTRAL -->
+        <div class="wrapper-login">
+            <div class="card-login">
+                <!-- IZQUIERDA -->
+                <div class="left-login">
+                    <div class="image-placeholder-login">
+                        <img src="https://img.freepik.com/vector-premium/ilustracion-concepto-seguridad-datos-globales_86047-620.jpg?w=700"
+                             alt="Ilustración">
+                    </div>
+                </div>
+
+                <!-- DERECHA -->
+                <div class="right-login">
+                    <div class="login-box-container">
+                        <h2>BIENVENIDO</h2>
+                        <p>Portal Único de Acceso Vocacional</p>
+
+                        <div class="input-group-login">
+                            <input type="text" id="lId" placeholder="Número de Identificación">
+                        </div>
+
+                        <div class="options-login">
+                            <label><input type="checkbox"> Recordarme</label>
+                            <a href="#">¿Olvidaste tu ID?</a>
+                        </div>
+
+                        <button class="btn-login-action" onclick="auth()">INGRESAR</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <div id="appContainer" class="app-container">
         <aside class="sidebar">
-            <h2>Panel de Control</h2>
+            <h2>Bienvenido</h2>
             <nav id="roleMenu" class="nav-menu"></nav>
             <div style="position: absolute; bottom: 40px; width: calc(100% - 50px);">
-                <div class="nav-item" onclick="logout()" style="color: var(--danger); opacity: 0.8;">
+                <div class="nav-item logout-item" onclick="logout()">
                     <i class="fa-solid fa-power-off"></i> Salir del Sistema
                 </div>
             </div>
@@ -824,13 +954,13 @@ async function editQuestion(qId, testId) {
         <div class="card span-6">
             <h3>Editar Pregunta #${q.num_pregunta}</h3>
             <div class="input-box"><label>Área</label><input type="text" id="eqArea" value="${q.area}"></div>
-            <div class="input-box"><label>Enunciado</label><textarea id="eqEnun" style="width:100%; border-radius:15px; border:1.5px solid #ddd; padding:10px;">${q.enunciado}</textarea></div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <input type="text" id="eq1" value="${q.opt1}" placeholder="Opción 1">
-                <input type="text" id="eq2" value="${q.opt2}" placeholder="Opción 2">
-                <input type="text" id="eq3" value="${q.opt3}" placeholder="Opción 3">
-                <input type="text" id="eq4" value="${q.opt4}" placeholder="Opción 4">
-                <input type="text" id="eq5" value="${q.opt5}" placeholder="Opción 5">
+            <div class="input-box"><label>Enunciado</label><textarea id="eqEnun">${q.enunciado}</textarea></div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                <div class="input-box"><label>Opción 1</label><input type="text" id="eq1" value="${q.opt1}" placeholder="Opción 1"></div>
+                <div class="input-box"><label>Opción 2</label><input type="text" id="eq2" value="${q.opt2}" placeholder="Opción 2"></div>
+                <div class="input-box"><label>Opción 3</label><input type="text" id="eq3" value="${q.opt3}" placeholder="Opción 3"></div>
+                <div class="input-box"><label>Opción 4</label><input type="text" id="eq4" value="${q.opt4}" placeholder="Opción 4"></div>
+                <div class="input-box" style="grid-column: span 2;"><label>Opción 5</label><input type="text" id="eq5" value="${q.opt5}" placeholder="Opción 5"></div>
             </div>
             <div style="display:flex; gap:15px; margin-top:20px;">
                 <button class="btn-main" onclick="updateQuestion(${qId}, ${testId})">Guardar</button>
@@ -2659,8 +2789,7 @@ async function getRectorSchool() {
                 <li class="nav-item active" onclick="viewRector()"><i class="fa-solid fa-building"></i> Dashboard</li>
                 <li class="nav-item" onclick="viewRectorPruebas()"><i class="fa-solid fa-clipboard-list"></i> Pruebas Vinculadas</li>
                 <li class="nav-item" onclick="viewRectorEstudiantes()"><i class="fa-solid fa-users"></i> Estudiantes por Grado</li>
-                <li class="nav-item" onclick="viewRectorInformes()"><i class="fa-solid fa-chart-bar"></i> Progreso, Informes y resultados</li>
-                <li class="nav-item" onclick="logout()" style="color: var(--danger); opacity: 0.8;"><i class="fa-solid fa-power-off"></i> Salir</li>`;
+                <li class="nav-item" onclick="viewRectorInformes()"><i class="fa-solid fa-chart-bar"></i> Progreso, Informes y resultados</li>`;
 
             const { data: colegioData, error: colegioError } = await getRectorSchool();
             if (colegioError) {
