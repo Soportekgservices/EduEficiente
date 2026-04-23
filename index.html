@@ -120,7 +120,7 @@
         .nav-item { 
             position: relative; padding: 14px 18px; border-radius: 12px; margin-bottom: 8px; 
             cursor: pointer; display: flex; align-items: center; gap: 15px; 
-            transition: 0.4s all; color: #ADB3D2; font-weight: 500;
+            transition: 0.4s all; color: #ffffff; font-weight: 500;
             background: linear-gradient(90deg, transparent 50%, #4f46e5 50%, #9333ea);
             background-size: 200% 100%;
         }
@@ -187,6 +187,9 @@
         .btn-action:hover { background: var(--accent); color: white; transform: translateY(-2px); }
         .btn-struct:hover { background: var(--success); }
         .btn-users:hover { background: var(--primary); }
+        .btn-link-test { background: #E8F4F2; }
+        .btn-rector-assign { background: #1D4E89; color: white; }
+        .edit-input { width: 100%; padding: 8px; border: 1.5px solid var(--accent); border-radius: 8px; font-family: inherit; font-size: 0.9rem; }
         .list-container { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
         .list-item { padding: 15px; background: #F8FAFC; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; transition: 0.2s; border: 2px solid transparent; }
         .list-item:hover { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: var(--accent); border-color: #f6b17a30; }
@@ -1513,8 +1516,8 @@ async function loadSchools() {
                         <td><strong>${s.dane}</strong><br><span style="font-size:0.8rem;">${s.ciudad}</span></td>
                         <td>
                             <button class="btn-action" onclick="editSchool(${s.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-action" style="background:#E8F4F2;" onclick='openLinkTestForm(${s.id}, ${JSON.stringify(s.nombre)})' title="Vincular evaluación"><i class="fa-solid fa-link"></i></button>
-                            <button class="btn-action" style="background:#1D4E89;" onclick='renderRectorForm(${s.id}, ${JSON.stringify(s.nombre)}, ${JSON.stringify(s.id_rector || '')})' title="Asignar Rector"><i class="fa-solid fa-user-tie"></i></button>
+                            <button class="btn-action btn-link-test" onclick='openLinkTestForm(${s.id}, ${JSON.stringify(s.nombre)})' title="Vincular evaluación"><i class="fa-solid fa-link"></i></button>
+                            <button class="btn-action btn-rector-assign" onclick='renderRectorForm(${s.id}, ${JSON.stringify(s.nombre)}, ${JSON.stringify(s.id_rector || '')})' title="Asignar Rector"><i class="fa-solid fa-user-tie"></i></button>
                             <button class="btn-action btn-struct" onclick='viewSchoolStructure(${s.id}, ${JSON.stringify(s.nombre)})' title="Grados y Grupos"><i class="fa-solid fa-sitemap"></i></button>
                             <button class="btn-action btn-users" onclick='viewLoadStudents(${s.id}, ${JSON.stringify(s.nombre)})' title="Cargar Estudiantes"><i class="fa-solid fa-users"></i></button>
                         </td>
@@ -1985,7 +1988,7 @@ async function loadStudents(groupId) {
             id, 
             nombre, 
             tipodoc,
-            tusuario (identificacion)
+            tusuario (id, identificacion)
         `)
         .eq('id_grupo', groupId)
         .order('nombre');
@@ -2008,12 +2011,12 @@ async function loadStudents(groupId) {
             </thead>
             <tbody>
                 ${data.map(est => `
-                    <tr>
-                        <td><span class="badge badge-pending" style="font-family:monospace;">${est.tusuario?.identificacion || 'S/N'}</span></td>
-                        <td><strong>${est.nombre}</strong></td>
-                        <td style="text-align:right;">
-                            <button class="btn-action" onclick="editStudentName('${est.id}', '${est.nombre}')"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn-action" style="background:#fee2e2; color:#b91c1c;" onclick="deleteStudent('${est.id}')"><i class="fa-solid fa-trash"></i></button>
+                    <tr id="row-${est.id}">
+                        <td id="id-cell-${est.id}"><span class="badge badge-pending" style="font-family:monospace;">${est.tusuario?.identificacion || 'S/N'}</span></td>
+                        <td id="name-cell-${est.id}"><strong>${est.nombre}</strong></td>
+                        <td style="text-align:right;" id="actions-${est.id}">
+                            <button class="btn-action" onclick="toggleEditStudent('${est.id}', '${est.tusuario?.id || est.id}')" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-action" style="background:#fee2e2; color:#b91c1c;" onclick="deleteStudent('${est.id}')" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `).join('')}
@@ -2022,12 +2025,34 @@ async function loadStudents(groupId) {
     `;
 }
 
-async function editStudentName(studentId, currentName) {
-    const nuevo = prompt("Nombre completo del estudiante:", currentName);
-    if (nuevo === null || nuevo.trim() === "") return;
-    const { error } = await _s.from('testudiantes').update({ nombre: nuevo.trim() }).eq('id', studentId);
-    if (error) alert("Error: " + error.message);
-    else if (selectedGroupId) loadStudents(selectedGroupId);
+function toggleEditStudent(studentId, userId) {
+    const idCell = document.getElementById(`id-cell-${studentId}`);
+    const nameCell = document.getElementById(`name-cell-${studentId}`);
+    const actionsCell = document.getElementById(`actions-${studentId}`);
+
+    const currentId = idCell.innerText.trim();
+    const currentName = nameCell.innerText.trim();
+
+    idCell.innerHTML = `<input type="text" class="edit-input" id="edit-id-${studentId}" value="${currentId}">`;
+    nameCell.innerHTML = `<input type="text" class="edit-input" id="edit-name-${studentId}" value="${currentName}">`;
+
+    actionsCell.innerHTML = `
+        <button class="btn-action" style="background:var(--success); color:white;" onclick="saveStudentEdit('${studentId}', '${userId}')" title="Guardar"><i class="fa-solid fa-check"></i></button>
+        <button class="btn-action" style="background:var(--secondary); color:white;" onclick="loadStudents(selectedGroupId)" title="Cancelar"><i class="fa-solid fa-xmark"></i></button>
+    `;
+}
+
+async function saveStudentEdit(studentId, userId) {
+    const newId = document.getElementById(`edit-id-${studentId}`).value.trim();
+    const newName = document.getElementById(`edit-name-${studentId}`).value.trim();
+
+    if(!newId || !newName) return alert("Los campos no pueden estar vacíos.");
+
+    const { error: err1 } = await _s.from('testudiantes').update({ nombre: newName }).eq('id', studentId);
+    const { error: err2 } = await _s.from('tusuario').update({ identificacion: newId, nombre: newName }).eq('id', userId);
+
+    if(err1 || err2) alert("Error al actualizar: " + (err1?.message || err2?.message));
+    else loadStudents(selectedGroupId);
 }
 
 async function deleteStudent(studentId) {
